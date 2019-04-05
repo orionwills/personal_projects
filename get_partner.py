@@ -52,8 +52,10 @@ def main():
         gdf = sdf[sdf['module_id']== module]
         group_id = int(gdf.group_id)
         group = df[df['group_id'] == group_id]
+        module_name = str(gdf.module_name)
+        module_n = df[df['module_name'] == module_name]
         partners = group[group['module_id'] == module]
-        print(partners[['student_id','first_name','last_name',]])
+        print(partners[['student_id','module_id','module_name', 'first_name','last_name']])
 
 
 
