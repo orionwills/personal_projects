@@ -25,10 +25,10 @@ def send_message_to_slack(
     df.to_csv(fpath, index_label=COL_DATE)
 
     # construct the tally message
-    message = f"+1 for {perp}\n\nCurrent Tally\n"
-
+    message = f"+1 for {perp}\n\n"
+    message += "Current Tally\n"
     for col in df.columns:
-        nlights = df.loc[today, col]
+        nlights = int(df.loc[today, col])
         message += f"\n{col}: {nlights * rlight_icon} ({nlights})"
 
     post = {"text": message}
@@ -48,19 +48,8 @@ def send_message_to_slack(
 script_name = sys.argv[0]
 args = len(sys.argv)
 
-if args > 1:
-    perp = sys.argv[1]
-if args > 2:
-    fpath = sys.argv[2]
-if args > 3:
-    server = sys.argv[3]
-
-if args == 2:
-    send_message_to_slack(perp)
-elif args == 3:
-    send_message_to_slack(perp, fpath)
-elif args == 4:
-    send_message_to_slack(perp, fpath, server)
+if 2 <= args <= 4:
+    send_message_to_slack(*sys.argv[1:args])
 else:
     print("Wrong number of arguments.")
     print(
