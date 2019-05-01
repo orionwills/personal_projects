@@ -10,7 +10,7 @@ COL_DATE = "date"
 
 
 def send_message_to_slack(
-    perp=env.DEFAULT_PERP, fpath="tally.csv", server=env.CODEUP
+    perp=env.DEFAULT_PERP, fpath="tally.csv", server=env.DEFAULT_SERVER
 ):
     rlight_icon = ":rotating_light: "
     today = str(date.today())
