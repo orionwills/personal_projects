@@ -1,36 +1,17 @@
-# Posting emoticons to a Slack channel
+# Posting to a Slack channel
 from urllib import request, parse
 import json
 import sys
+from env import TEST, ACTUAL
 
-# Code modified by github.com/orionwills
-# Original code from https://www.accadius.com/send-message-slack-python-program/
-
-# Changes made:
-# - added count of emoticons to send (argument 1)
-# - added which emoticon to send to (argument 2)
-# - added server swapper (argumemnt 3)
-
-TEST = 'https://hooks.slack.com/services/your-slack-test-server-here'
-ACTUAL = 'https://hooks.slack.com/services/your-slack-actual-server-here'
-
-# defaults
-# count defaults to 1
-# emoticon defaults to rotating_light
-# server defaults to TEST
-
-def send_message_to_slack(count=1, icon='rotating_light', server=TEST):
+def send_message_to_slack(count, icon='rotating_light', server=ACTUAL):
     
-    if server == 'TEST':
-        server = 'https://hooks.slack.com/services/your-slack-test-server-here'
+    if server == 'ACTUAL':
+        server = ACTUAL
     else:
-        if server == 'ACTUAL':
-            server = 'https://hooks.slack.com/services/your-slack-actual-server-here'
-
-# wraps emoticon with ':'
+        server = TEST
 
     message = ":" + icon + ": "
-# itirates number of emoticons
     text = message * int(count)
 
     post = {"text": "{0}".format(text)}
