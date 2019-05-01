@@ -28,7 +28,7 @@ def send_message_to_slack(
     message = f"+1 for {perp}\n\n"
     message += "Current Tally\n"
     for col in df.columns:
-        nlights = df.loc[today, col]
+        nlights = int(df.loc[today, col])
         message += f"\n{col}: {nlights * rlight_icon} ({nlights})"
 
     post = {"text": message}
