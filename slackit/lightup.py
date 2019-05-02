@@ -16,6 +16,14 @@ def send_message_to_slack(
     today = str(date.today())
     df = pd.read_csv(fpath, index_col=COL_DATE)
 
+    # is it a new day?
+    try:
+        df.loc[today]
+    except KeyError:
+        # everyone starts with 0
+        for col in df.columns:
+            df.loc[today, col] = 0
+
     # has the perp been lit up before?
     try:
         df.loc[today, perp] += 1
@@ -29,7 +37,8 @@ def send_message_to_slack(
     message += "Current Tally\n"
     for col in df.columns:
         nlights = int(df.loc[today, col])
-        message += f"\n{col}: {nlights * rlight_icon} ({nlights})"
+        if nlights:
+            message += f"\n{col}: {nlights * rlight_icon} ({nlights})"
 
     post = {"text": message}
 
